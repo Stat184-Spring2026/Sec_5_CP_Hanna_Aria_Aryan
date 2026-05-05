@@ -1,6 +1,6 @@
-# Project Title
+# Food Price Trends and Analytics
 
-Write a 1-2 sentences that quickly and clearly convey what your repo is for.
+Looking at the data for food prices over the past 10 years to find certain trends and correlations. We want to see how the changes in these prices has affected the cost of living.
 
 ## Overview
 
@@ -23,6 +23,6 @@ Provide some information about what you intend to do with the project. You can a
 Use this section to explain the structure of your repo. This should help visitors quickly figure out where they should look to find certain elements. Further, you can use this space to highlight and briefly explain important/key files in the repo.
 
 
-## Authors
+## Authors and Information
 
-Give information about who are the authors of the project and how people can get in touch if they have questions.
+Aria Hooybergs, 484-757-8157, ariashane21@gmail.com / ash5932@psu.edu
