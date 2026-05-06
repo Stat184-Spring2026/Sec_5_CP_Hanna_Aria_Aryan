@@ -1,25 +1,142 @@
 ---
-title: "Data Analysis Report"
-author: "Hanna Oh"
-date: "April 16, 2026"
+title: "Food Prices and Inflation"
+author: "Hanna Oh, Aria Hooybergs, Aryan"
+date: "May 6, 2026"
 format: pdf
 editor: visual
 ---
 
 # Introduction
 
+Our project explores how the average prices of selected food items have changed over time in U.S. cities.
+
+We chose this topic because we are interested in economic trends such as inflation and the cost of living. By looking at everyday food items, we can better understand how prices change over time and how those changes may affect daily life.
+
+Our main goal is to identify trends and patterns in food price changes and to examine how the prices of common food items have shifted over the years within an inflation context.
+
+Initially, we planned to compare broader CPI categories, such as food at home and food away from home. However, after exploring the available data, we adjusted our focus to individual food items because the dataset we used provided detailed average price information rather than category-level CPI indices.
+
 # Data
+
+We used publicly available data from the U.S. Bureau of Labor Statistics (BLS). Our main dataset was the Average Price dataset, which provides monthly price data for individual food items across U.S. cities. We also used an additional dataset focusing specifically on Grade A egg prices and their monthly percent changes.
+
+For the Average Price dataset, the main variables used in our analysis include the time period, food item, and average price value. For the egg dataset, the main variables include date and monthly percent change. In our analysis, each case represents a time-point observation for a specific food item.
 
 # Data Provenance
 
+The data were collected and published by the U.S. Bureau of Labor Statistics, a federal agency responsible for measuring labor market activity, prices, and other economic conditions in the United States.
+
+The Average Price dataset reports monthly price information for selected consumer goods, including food items, across U.S. cities. These data are intended to help track changes in consumer prices over time and support public understanding of inflation and cost-of-living trends.
+
+The data are publicly available through the BLS website and are provided in downloadable tabular formats. Because the datasets are maintained by a government statistical agency, they include documentation and standardized variable structures, which support reproducible analysis.
+
 # FAIR and CARE Principles
+
+## FAIR Principles
+
+The datasets align well with the FAIR principles.
+
+-   **Findable:** The data are publicly available through the U.S. Bureau of Labor Statistics website and are accompanied by documentation.
+-   **Accessible:** The files can be downloaded directly and used in statistical software such as R.
+-   **Interoperable:** The data are stored in tabular formats that can be imported, cleaned, and combined with other datasets.
+-   **Reusable:** Because the data are well-documented and publicly distributed, they can be reused for future analysis.
+
+## CARE Principles
+
+The datasets align more clearly with FAIR principles than CARE principles. CARE principles are especially important for data involving Indigenous communities or community-governed data. In this case, the BLS data are public government datasets and do not specifically involve those kinds of community-based data concerns.
+
+However, the data still support some CARE-related values in a broader sense. They contribute to public understanding of economic conditions and can help people better understand trends related to prices, inflation, and daily living costs.
 
 # Data Cleaning and Wrangling
 
+Before analyzing the data, we needed to clean the raw datasets because they were not immediately ready for analysis.
+
+For the Average Price dataset, we imported multiple files and merged them into one complete dataset. We then converted the price values into numeric format, created a time variable using the year and month, selected a set of representative food items, and removed missing values.
+
+For the egg price dataset, we cleaned the data by formatting the date variable, converting percentage change values into numeric format, and removing missing or invalid entries.
+
+We used R and tidyverse tools, including dplyr, tidyr, ggplot2, and readr, to complete these steps and prepare clean datasets for analysis.
+
 # Exploratory Data Analysis
+
+```{r, include=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+food_clean <- read_csv("clean_food_prices.csv")
+
+food_clean <- food_clean |>
+  mutate(date = as.Date(date))
+```
+
+The line plot below shows changes in average prices of selected food items over time.
+
+``` {r fig-food-price-trend, echo=FALSE, fig.width=10, fig.height=6, fig.cap="Average Prices of Selected Food Items Over Time", fig.alt="Line plot showing average prices of selected food items over time."}
+ggplot(food_clean, aes(x = date, y = value, color = item_clean)) +
+  geom_line(linewidth = 1) +
+  labs(
+    title = "Average Prices of Selected Food Items Over Time",
+    x = "Year",
+    y = "Average Price (USD)",
+    color = "Food Item"
+  ) +
+  theme_minimal()
+```
+
+This line plot shows how the average prices of selected food items changed over time. Overall, most food items show an upward trend, indicating that food prices generally increased over the years. However, the rate and pattern of increase differ across items. Ground beef shows the largest overall increase, while bananas remain relatively stable compared with the other items. Eggs show more noticeable fluctuations, suggesting that some food prices are more volatile than others.
+
+```{r food-price-summary-table, echo=FALSE}
+summary_table <- food_clean |>
+  group_by(item_clean) |>
+  summarise(
+    earliest_date = min(date, na.rm = TRUE),
+    latest_date = max(date, na.rm = TRUE),
+    earliest_price = value[date == min(date, na.rm = TRUE)][1],
+    latest_price = value[date == max(date, na.rm = TRUE)][1],
+    absolute_change = latest_price - earliest_price,
+    percent_change = ((latest_price - earliest_price) / earliest_price) * 100
+  ) |>
+  ungroup() |>
+  mutate(
+    earliest_price = round(earliest_price, 2),
+    latest_price = round(latest_price, 2),
+    absolute_change = round(absolute_change, 2),
+    percent_change = round(percent_change, 1)
+  )
+```
+
+```{r tbl-summary, echo=FALSE}
+summary_table |>
+  kable(
+    caption = "Summary of Price Changes for Selected Food Items",
+    col.names = c(
+      "Food Item", "Earliest Date", "Latest Date",
+      "Earliest Price", "Latest Price",
+      "Absolute Change", "Percent Change (%)"
+    ),
+    align = "lcccccc"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center"
+  )
+```
+
+The summary table complements the line plot by presenting the earliest and latest observed prices for each food item, along with the absolute and percentage change over time. While the graph helps visualize long-term trends and short-term fluctuations, the table makes it easier to compare the overall magnitude of price changes across items.
+
+\newpage
 
 # Discussion / Conclusion
 
+
 # Author Contributions
+
+Hanna led the cleaning and wrangling of the Average Price dataset, created key visualizations, and contributed to the written analysis.
+
+Aria worked on the egg price dataset, including cleaning, visualization, and interpretation of short-term price fluctuations.
+
+Aryan contributed to the development of visualizations, interpretation of findings, presentation preparation, and final editing of the report.
 
 # Code Appendix
