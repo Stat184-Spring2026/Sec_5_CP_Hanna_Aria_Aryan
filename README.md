@@ -28,3 +28,4 @@ Use this section to explain the structure of your repo. This should help visitor
 ## Authors and Information
 
 Aria Hooybergs, 484-757-8157, ash5932@psu.edu
+Hanna Oh, 814-753-0390, hzo5090@psu.edu
