@@ -4,11 +4,13 @@ This repository contains information about food prices to show various trends an
 
 ## Overview
 
-Expand on those introductory sentences with a brief but informative description of your project's purpose and goals. This section should help visitors decide whether they should dig deeper into your repo/project.
+The purpose of this project is to identify trends and patterns in food price changes over time.  
+We focus on selected everyday food items, such as bananas, bread, eggs, ground beef, and milk, to better understand how common living costs change in an inflationary context.
 
-### Interesting Insight (Optional)
+Through this project, we also practice data wrangling, visualization, and reproducible reporting in R.
 
-This is optional but highly recommended. You'll include one interesting insight from your project as part of the README. This insight is most effective when you include a visual. Keep in mind that this visual must be included as an image file (e.g., JPG, PNG, etc.). You can export plots created with `{ggplot2}` by using the function `ggsave`.
+### Interesting Insight
+
 
 ## Data Sources and Acknowledgements
 
