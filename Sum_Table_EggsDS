@@ -1,0 +1,27 @@
+summary_table <- data_clean |>
+  summarise(
+    Mean_Price = round(mean(Value, na.rm = TRUE), 2),
+    Median_Price = round(median(Value, na.rm = TRUE), 2),
+    Min_Price = round(min(Value, na.rm = TRUE), 2),
+    Max_Price = round(max(Value, na.rm = TRUE), 2),
+    Standard_Deviation = round(sd(Value, na.rm = TRUE), 2),
+    Earliest_Price = round(first(Value), 2),
+    Latest_Price = round(last(Value), 2),
+    Total_Percent_Change = round((((Latest_Price - Earliest_Price)/Earliest_Price) * 100), 2)
+  )
+
+summary_table |>
+  kable(
+    caption = "Summary of Price Changes for Grade A Eggs",
+    col.names = c(
+      "Mean Price", "Median Price", "Minimum Price",
+      "Maximum Price", "Standard Deviation",
+      "Earliest Price (Jan 2016)", "Latest Price (Mar 2026)", "Percent Change"
+    ),
+    align = "lcccccc"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center"
+  )
