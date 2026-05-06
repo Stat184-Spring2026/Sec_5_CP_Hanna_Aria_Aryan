@@ -1,0 +1,15 @@
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(kableExtra)
+library(knitr)
+
+pathway <- "C:/Users/ahooy/Downloads/Grade-A-Eggs-Price-NSA.csv"
+
+eggs_data <- read.csv(pathway, check.names = FALSE, stringsAsFactors = FALSE)
+
+data_clean <- eggs_data |>
+  mutate(Date = as.Date(paste0(Label, " 01"), format = "%Y %b %d")) |>
+  mutate(Value = suppressWarnings(as.numeric(Value))) |>
+  mutate(`1-Month % Change` = suppressWarnings(as.numeric(`1-Month % Change`)))
