@@ -23,6 +23,6 @@ Provide some information about what you intend to do with the project. You can a
 Use this section to explain the structure of your repo. This should help visitors quickly figure out where they should look to find certain elements. Further, you can use this space to highlight and briefly explain important/key files in the repo.
 
 
-## Authors
+## Authors and Information
 
 Aria Hooybergs, 484-757-8157, ash5932@psu.edu
