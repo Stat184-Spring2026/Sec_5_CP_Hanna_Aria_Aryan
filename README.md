@@ -1,6 +1,6 @@
-# Project Title
+# Food Prices and Inflation
 
-Write a 1-2 sentences that quickly and clearly convey what your repo is for.
+This repository contains information about food prices to show various trends and analytics in the context of inflation.
 
 ## Overview
 
@@ -25,4 +25,4 @@ Use this section to explain the structure of your repo. This should help visitor
 
 ## Authors
 
-Give information about who are the authors of the project and how people can get in touch if they have questions.
+Aria Hooybergs, 484-757-8157, ash5932@psu.edu
