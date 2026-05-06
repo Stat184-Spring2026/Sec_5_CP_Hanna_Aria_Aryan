@@ -1,0 +1,25 @@
+---
+title: "Data Analysis Report"
+author: "Hanna Oh"
+date: "April 16, 2026"
+format: pdf
+editor: visual
+---
+
+# Introduction
+
+# Data
+
+# Data Provenance
+
+# FAIR and CARE Principles
+
+# Data Cleaning and Wrangling
+
+# Exploratory Data Analysis
+
+# Discussion / Conclusion
+
+# Author Contributions
+
+# Code Appendix
