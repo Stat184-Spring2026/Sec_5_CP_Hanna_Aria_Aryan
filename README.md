@@ -18,7 +18,7 @@ We use publicly available data from the U.S. Bureau of Labor Statistics (BLS).
 
 Data sources used in this project include:
 - BLS Average Price dataset
-- BLS egg price data
+- BLS Egg Price dataset
 
 These datasets were used to examine long-term price trends and short-term variation in selected food items.
 
