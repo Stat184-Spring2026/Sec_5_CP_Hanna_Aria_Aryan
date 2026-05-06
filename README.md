@@ -1,6 +1,6 @@
-# Food Price Trends and Analytics
+# Food Prices and Inflation
 
-Looking at the data for food prices over the past 10 years to find certain trends and correlations. We want to see how the changes in these prices has affected the cost of living.
+This repository contains information about food prices to show various trends and analytics in the context of inflation.
 
 ## Overview
 
@@ -25,4 +25,4 @@ Use this section to explain the structure of your repo. This should help visitor
 
 ## Authors and Information
 
-Aria Hooybergs, 484-757-8157, ariashane21@gmail.com / ash5932@psu.edu
+Aria Hooybergs, 484-757-8157, ash5932@psu.edu
