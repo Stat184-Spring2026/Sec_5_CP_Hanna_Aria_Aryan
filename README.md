@@ -37,3 +37,4 @@ Use this section to explain the structure of your repo. This should help visitor
 
 - Aria Hooybergs, 484-757-8157, ash5932@psu.edu
 - Hanna Oh, 814-753-0390, hzo5090@psu.edu
+- Aryan Deshmukh, 480-228-1139, acd5922@psu.edu
