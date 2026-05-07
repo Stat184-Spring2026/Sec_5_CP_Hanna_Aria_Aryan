@@ -1,14 +1,18 @@
 ---
 title: "Food Prices and Inflation"
-author: "Hanna Oh, Aria Hooybergs, Aryan"
+subtitle: "Stat 184"
+authors: "Hanna Oh, Aria Hooybergs, Aryan Deshmukh"
 date: "May 6, 2026"
+date-modified: now
 format: pdf
 editor: visual
+bibliography: references.bib
+csl: apa.csl
 ---
 
 # Introduction
 
-Our project explores how the average prices of selected food items have changed over time in U.S. cities.
+Our project explores how the average prices of selected food items have changed over time in U.S. cities [@bls_prices].
 
 We chose this topic because we are interested in economic trends such as inflation and the cost of living. By looking at everyday food items, we can better understand how prices change over time and how those changes may affect daily life.
 
@@ -18,7 +22,7 @@ Initially, we planned to compare broader CPI categories, such as food at home an
 
 # Data
 
-We used publicly available data from the U.S. Bureau of Labor Statistics (BLS). Our main dataset was the Average Price dataset, which provides monthly price data for individual food items across U.S. cities. We also used an additional dataset focusing specifically on Grade A egg prices and their monthly percent changes.
+We used publicly available data from the U.S. Bureau of Labor Statistics (BLS) [@bls_prices]. Our main dataset was the Average Price dataset, which provides monthly price data for individual food items across U.S. cities. We also used an additional dataset focusing specifically on Grade A egg prices and their monthly percent changes [@bls_eggs].
 
 For the Average Price dataset, the main variables used in our analysis include the time period, food item, and average price value. For the egg dataset, the main variables include date and monthly percent change. In our analysis, each case represents a time-point observation for a specific food item.
 
@@ -55,7 +59,7 @@ For the Average Price dataset, we imported multiple files and merged them into o
 
 For the egg price dataset, we cleaned the data by formatting the date variable, converting percentage change values into numeric format, and removing missing or invalid entries.
 
-We used R and tidyverse tools, including dplyr, tidyr, ggplot2, and readr, to complete these steps and prepare clean datasets for analysis.
+We used R and tidyverse tools, including dplyr, tidyr, ggplot2, and readr, to complete  steps and prepare clean datasets for analysis.
 
 # Exploratory Data Analysis
 
@@ -144,7 +148,7 @@ data_clean <- eggs_data |>
   mutate(`1-Month % Change` = suppressWarnings(as.numeric(`1-Month % Change`)))
 ```
 
-The line plot below demonstrates the Monthly Percent Change in the prices of Grade A Eggs from 2016 to 2026. The plot currently demonstrates only the monthly changes with 1 months sepearations, but this can be modified with 3 month, 6 month, and 12 month separations.
+The line plot below demonstrates the Monthly Percent Change in the prices of Grade A Eggs from 2016 to 2026. The plot currently demonstrates only the monthly changes with 1 months sepearations, but this can be modified with 3-month, 6-month, and 12-month separations.
 
 ```{r, echo = FALSE, fig.width = 10, fig.height = 6, fig.cap = "Monthy Percent Change in Egg Prices", fig.alt = "Line Plot from 2016 to 2026"}
 monthly_change_eggs <- ggplot(data_clean |> filter(!is.na(`1-Month % Change`)),
@@ -174,7 +178,7 @@ value_area_eggs <- ggplot(data_clean |> filter(!is.na(Value)),
   ) +
   theme_minimal()
 ```
-As we can see from the plots above, the prices of eggs have generally increased as time goes on. There are a few spikes that stick out to take note of. One spike tends to occur in 2020 among all of the Percent Change plots. We can attest these spikes to the COVID-19 pandemic and shutdown that the world faced in early 2020. Some other notable spikes and drops that we can see are in early 2023 and early 2025. We can diagnose the reason by analyzing the seasons these spikes occurred in, which happen to be winter. Winter is notorious for being flu season, which is exactly what caused these spikes. In late 2022/24 to early 2023/25 the country faced an outbreak of avian flu which would lead to the deaths of millions of egg laying hens nationwide.
+As we can see from the plots above, the prices of eggs have generally increased as time goes on. There are a few spikes that stick out to take note of. One spike tends to occur in 2020 among all of the Percent Change plots. We can attribute these spikes to the COVID-19 pandemic and the shutdown that the world faced in early 2020. Some other notable spikes and drops that we can see are in early 2023 and early 2025. We can diagnose the reason by analyzing the seasonal spikes that occurred, which happen to be in winter. Winter is notorious for being flu season, which is exactly what caused  spikes [@schulz2023eggs]. In late 2022/24 to early 2023/25, the country faced an outbreak of avian flu, which would lead to the deaths of millions of egg-laying hens nationwide.
 
 ```{r, echo = FALSE}
 summary_table <- data_clean |>
@@ -208,12 +212,16 @@ summary_table |>
   )
 ```
 
-The above summary table displays some interesting information about the Grade A Eggs dataset including the earliest price from the time period selected (Jan 2016) and the most recent price (Mar 2026). With this we can identify the total percent change in the price of eggs over the past 10 years to be 0.86%, meaning prices are only 0.86% higher in March 2026 than they were in Janurary 2016.
+The above summary table displays some interesting information about the Grade A Eggs dataset, including the earliest price from the time period selected (Jan 2016) and the most recent price (Mar 2026). With this, we can identify the total percent change in the price of eggs over the past 10 years to be 0.86%, meaning prices are only 0.86% higher in March 2026 than they were in January 2016.
 
 \newpage
 
 # Discussion / Conclusion
+Overall, our analysis has revealed the relationship between food prices and overall inflation in the US on a regular basis. According to the data provided, the prices of most items have been increasing over time, which indicates a correlation between food prices and inflation, as expected. Although not all of the prices demonstrated the consistency of their changes, it is clear that the overall rise of their values shows how the prices for common products have been changing over time and affecting people.
 
+However, one must keep in mind that even among similar products, their behaviour can differ from each other. For instance, ground beef demonstrated consistency when rising; banana prices have changed insignificantly; and eggs experienced drastic rises in price throughout several periods of time. Therefore, this allows concluding that inflation affects different goods differently, making some products especially vulnerable to changes in their production processes due to different factors.
+
+As seen from the above analysis, inflation not only exists but is also evident in food prices. The latter have been changing in time, growing on average for each item. However, such a change does not affect all food items in the same manner, and it is possible to observe significant differences depending on the type of product under discussion.
 
 # Author Contributions
 
@@ -222,5 +230,15 @@ Hanna led the cleaning and wrangling of the Average Price dataset, created key v
 Aria worked on the egg price dataset, including cleaning, visualization, and interpretation of short-term price fluctuations.
 
 Aryan contributed to the development of visualizations, interpretation of findings, presentation preparation, and final editing of the report.
+
+#Gen-AI Appendix
+
+Quillbot was used in texts to check for Grammar and Spelling mistakes
+
+Date: 6th May, 2026
+
+Prompts: The paragraphs were given, and it was evaluated if any changes needed to be made
+
+Response: Corrections such as punctuation and spelling
 
 # Code Appendix
