@@ -5,9 +5,7 @@ library(lubridate)
 library(kableExtra)
 library(knitr)
 
-pathway <- "C:/Users/ahooy/Downloads/Grade-A-Eggs-Price-NSA.csv"
-
-eggs_data <- read.csv(pathway, check.names = FALSE, stringsAsFactors = FALSE)
+eggs_data <- read.csv("Grade-A-Eggs-Price-NSA.csv", check.names = FALSE, stringsAsFactors = FALSE)
 
 data_clean <- eggs_data |>
   mutate(Date = as.Date(paste0(Label, " 01"), format = "%Y %b %d")) |>
