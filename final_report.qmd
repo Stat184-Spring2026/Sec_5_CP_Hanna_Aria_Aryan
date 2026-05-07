@@ -1,10 +1,30 @@
 ---
 title: "Food Prices and Inflation"
 subtitle: "Stat 184"
-authors: "Hanna Oh, Aria Hooybergs, Aryan Deshmukh"
+author:
+  - "Hanna Oh"
+  - "Aria Hooybergs"
+  - "Aryan Deshmukh"
 date: "May 6, 2026"
 date-modified: now
-format: pdf
+
+format:
+  pdf:
+    documentclass: article
+    toc: true
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=0.8in
+      - bottom=0.8in
+      - left=0.7in
+      - right=0.7in
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
 editor: visual
 bibliography: references.bib
 csl: apa.csl
@@ -62,11 +82,12 @@ For the egg price dataset, we cleaned the data by formatting the date variable, 
 We used R and tidyverse tools, including dplyr, tidyr, ggplot2, and readr, to complete  steps and prepare clean datasets for analysis.
 
 # Exploratory Data Analysis
-
+  
 ```{r, include=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(knitr)
 library(kableExtra)
+library(ggplot2)
 
 food_clean <- read_csv("clean_food_prices.csv")
 
@@ -76,7 +97,9 @@ food_clean <- food_clean |>
 
 The line plot below shows changes in average prices of selected food items over time.
 
-``` {r fig-food-price-trend, echo=FALSE, fig.width=10, fig.height=6, fig.cap="Average Prices of Selected Food Items Over Time", fig.alt="Line plot showing average prices of selected food items over time."}
+```{r}
+#| echo: false
+#| eval: true
 ggplot(food_clean, aes(x = date, y = value, color = item_clean)) +
   geom_line(linewidth = 1) +
   labs(
@@ -124,7 +147,8 @@ summary_table |>
   kable_styling(
     bootstrap_options = c("striped", "hover", "condensed"),
     full_width = FALSE,
-    position = "center"
+    position = "center",
+    latex_options = "scale_down"
   )
 ```
 
@@ -138,9 +162,7 @@ library(lubridate)
 library(kableExtra)
 library(knitr)
 
-pathway <- "C:/Users/ahooy/Downloads/Grade-A-Eggs-Price-NSA.csv"
-
-eggs_data <- read.csv(pathway, check.names = FALSE, stringsAsFactors = FALSE)
+eggs_data <- read.csv("Grade-A-Eggs-Price-NSA.csv", check.names = FALSE, stringsAsFactors = FALSE)
 
 data_clean <- eggs_data |>
   mutate(Date = as.Date(paste0(Label, " 01"), format = "%Y %b %d")) |>
@@ -151,7 +173,7 @@ data_clean <- eggs_data |>
 The line plot below demonstrates the Monthly Percent Change in the prices of Grade A Eggs from 2016 to 2026. The plot currently demonstrates only the monthly changes with 1 months sepearations, but this can be modified with 3-month, 6-month, and 12-month separations.
 
 ```{r, echo = FALSE, fig.width = 10, fig.height = 6, fig.cap = "Monthy Percent Change in Egg Prices", fig.alt = "Line Plot from 2016 to 2026"}
-monthly_change_eggs <- ggplot(data_clean |> filter(!is.na(`1-Month % Change`)),
+ggplot(data_clean |> filter(!is.na(`1-Month % Change`)),
                       aes(x = Date, y = `1-Month % Change`)) +
   geom_line(color = "red", linewidth = 1) +
   theme_minimal() +
@@ -167,7 +189,7 @@ monthly_change_eggs <- ggplot(data_clean |> filter(!is.na(`1-Month % Change`)),
 The following area chart shows the change in the actual prices of eggs over the past 10 years.
 
 ```{r, echo = FALSE, fig.width = 10, fig.height = 6, fig.cap = "Changes in Egg Prices", fig.alt = "Area Chart from 2016 to 2026"}
-value_area_eggs <- ggplot(data_clean |> filter(!is.na(Value)),
+ggplot(data_clean |> filter(!is.na(Value)),
                           aes(x = Date, y = Value)) +
   geom_area(alpha = 0.75, fill = 'blue') +
   theme_minimal() +
@@ -196,16 +218,29 @@ summary_table <- data_clean |>
 
 ```{r, echo = FALSE}
 summary_table |>
-  kable(
-    caption = "Summary of Price Changes for Grade A Eggs",
-    col.names = c(
-      "Mean Price", "Median Price", "Minimum Price",
-      "Maximum Price", "Standard Deviation",
-      "Earliest Price (Jan 2016)", "Latest Price (Mar 2026)", "Percent Change"
-    ),
-    align = "lcccccc"
+  tidyr::pivot_longer(
+    cols = everything(),
+    names_to = "Metric",
+    values_to = "Value"
   ) |>
-  kable_styling(
+  dplyr::mutate(
+    Metric = dplyr::recode(Metric,
+      Mean_Price = "Mean Price",
+      Median_Price = "Median Price",
+      Min_Price = "Minimum Price",
+      Max_Price = "Maximum Price",
+      Standard_Deviation = "Standard Deviation",
+      Earliest_Price = "Earliest Price (Jan 2016)",
+      Latest_Price = "Latest Price (Mar 2026)",
+      Total_Percent_Change = "Percent Change"
+    )
+  ) |>
+  knitr::kable(
+    col.names = c("Metric", "Value"),
+    align = "ll",
+    caption = "Summary of Price Changes for Grade A Eggs"
+  ) |>
+  kableExtra::kable_styling(
     bootstrap_options = c("striped", "hover", "condensed"),
     full_width = FALSE,
     position = "center"
@@ -231,7 +266,7 @@ Aria worked on the egg price dataset, including cleaning, visualization, and int
 
 Aryan contributed to the development of visualizations, interpretation of findings, presentation preparation, and final editing of the report.
 
-#Gen-AI Appendix
+# Gen-AI Appendix
 
 Quillbot was used in texts to check for Grammar and Spelling mistakes
 
@@ -242,3 +277,156 @@ Prompts: The paragraphs were given, and it was evaluated if any changes needed t
 Response: Corrections such as punctuation and spelling
 
 # Code Appendix
+
+```{r code-Appendix, echo=TRUE, eval=FALSE}
+#| label: code-Appendix
+#| ref-label: !expr knitr::all_labels()
+#| echo: true
+#| eval: false
+
+## Tidying the food prices data set
+
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+food_clean <- read_csv("clean_food_prices.csv")
+
+food_clean <- food_clean |>
+  mutate(date = as.Date(date))
+
+## Average Prices of Selected Food Items Over Time
+
+ggplot(food_clean, aes(x = date, y = value, color = item_clean)) +
+  geom_line(linewidth = 1) +
+  labs(
+    title = "Average Prices of Selected Food Items Over Time",
+    x = "Year",
+    y = "Average Price (USD)",
+    color = "Food Item"
+  ) +
+  theme_minimal()
+
+## Summary Table of Price Changes for Selected Food items
+
+summary_table <- food_clean |>
+  group_by(item_clean) |>
+  summarise(
+    earliest_date = min(date, na.rm = TRUE),
+    latest_date = max(date, na.rm = TRUE),
+    earliest_price = value[date == min(date, na.rm = TRUE)][1],
+    latest_price = value[date == max(date, na.rm = TRUE)][1],
+    absolute_change = latest_price - earliest_price,
+    percent_change = ((latest_price - earliest_price) / earliest_price) * 100
+  ) |>
+  ungroup() |>
+  mutate(
+    earliest_price = round(earliest_price, 2),
+    latest_price = round(latest_price, 2),
+    absolute_change = round(absolute_change, 2),
+    percent_change = round(percent_change, 1)
+  )
+
+summary_table |>
+  kable(
+    caption = "Summary of Price Changes for Selected Food Items",
+    col.names = c(
+      "Food Item", "Earliest Date", "Latest Date",
+      "Earliest Price", "Latest Price",
+      "Absolute Change", "Percent Change (%)"
+    ),
+    align = "lcccccc"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center",
+    latex_options = "scale_down"
+  )
+
+## Tidying Data for Monthly Percent Change in Egg Prices
+
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(kableExtra)
+library(knitr)
+
+eggs_data <- read.csv("Grade-A-Eggs-Price-NSA.csv", check.names = FALSE, stringsAsFactors = FALSE)
+
+data_clean <- eggs_data |>
+  mutate(Date = as.Date(paste0(Label, " 01"), format = "%Y %b %d")) |>
+  mutate(Value = suppressWarnings(as.numeric(Value))) |>
+  mutate(`1-Month % Change` = suppressWarnings(as.numeric(`1-Month % Change`)))
+
+## Line Plot for Monthly Percent Change in Egg Prices
+
+ggplot(data_clean |> filter(!is.na(`1-Month % Change`)),
+                      aes(x = Date, y = `1-Month % Change`)) +
+  geom_line(color = "red", linewidth = 1) +
+  theme_minimal() +
+  labs(
+    title = "Grade A Eggs Price Over Time",
+    subtitle = "1 Month Percent Change",
+    x = "Year",
+    y = "% Change"
+  ) +
+  theme(plot.title = element_text(face = "bold"))
+
+## Area Plot for Changes in Egg Prices
+
+ggplot(data_clean |> filter(!is.na(Value)),
+                          aes(x = Date, y = Value)) +
+  geom_area(alpha = 0.75, fill = 'blue') +
+  theme_minimal() +
+  labs(
+    title = "Grade A Eggs Price Over Time",
+    x = "Year",
+    y = "Price ($)"
+  ) +
+  theme_minimal()
+
+## Summary of Price Changes for Grade A Eggs
+
+summary_table <- data_clean |>
+  summarise(
+    Mean_Price = round(mean(Value, na.rm = TRUE), 2),
+    Median_Price = round(median(Value, na.rm = TRUE), 2),
+    Min_Price = round(min(Value, na.rm = TRUE), 2),
+    Max_Price = round(max(Value, na.rm = TRUE), 2),
+    Standard_Deviation = round(sd(Value, na.rm = TRUE), 2),
+    Earliest_Price = round(first(Value), 2),
+    Latest_Price = round(last(Value), 2),
+    Total_Percent_Change = round((((Latest_Price - Earliest_Price)/Earliest_Price) * 100), 2)
+  )
+
+summary_table |>
+  tidyr::pivot_longer(
+    cols = everything(),
+    names_to = "Metric",
+    values_to = "Value"
+  ) |>
+  dplyr::mutate(
+    Metric = dplyr::recode(Metric,
+      Mean_Price = "Mean Price",
+      Median_Price = "Median Price",
+      Min_Price = "Minimum Price",
+      Max_Price = "Maximum Price",
+      Standard_Deviation = "Standard Deviation",
+      Earliest_Price = "Earliest Price (Jan 2016)",
+      Latest_Price = "Latest Price (Mar 2026)",
+      Total_Percent_Change = "Percent Change"
+    )
+  ) |>
+  knitr::kable(
+    col.names = c("Metric", "Value"),
+    align = "ll",
+    caption = "Summary of Price Changes for Grade A Eggs"
+  ) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center"
+  )
+```
