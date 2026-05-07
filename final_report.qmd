@@ -1,14 +1,17 @@
 ---
 title: "Food Prices and Inflation"
-author: "Hanna Oh, Aria Hooybergs, Aryan"
+subtitle: "Stat 184"
+authors: "Hanna Oh, Aria Hooybergs, Aryan Deshmukh"
 date: "May 6, 2026"
 format: pdf
 editor: visual
+bibliography: references.bib
+csl: apa.csl
 ---
 
 # Introduction
 
-Our project explores how the average prices of selected food items have changed over time in U.S. cities.
+Our project explores how the average prices of selected food items have changed over time in U.S. cities [@bls_prices].
 
 We chose this topic because we are interested in economic trends such as inflation and the cost of living. By looking at everyday food items, we can better understand how prices change over time and how those changes may affect daily life.
 
@@ -18,7 +21,7 @@ Initially, we planned to compare broader CPI categories, such as food at home an
 
 # Data
 
-We used publicly available data from the U.S. Bureau of Labor Statistics (BLS). Our main dataset was the Average Price dataset, which provides monthly price data for individual food items across U.S. cities. We also used an additional dataset focusing specifically on Grade A egg prices and their monthly percent changes.
+We used publicly available data from the U.S. Bureau of Labor Statistics (BLS) [@bls_prices]. Our main dataset was the Average Price dataset, which provides monthly price data for individual food items across U.S. cities. We also used an additional dataset focusing specifically on Grade A egg prices and their monthly percent changes [@bls_eggs].
 
 For the Average Price dataset, the main variables used in our analysis include the time period, food item, and average price value. For the egg dataset, the main variables include date and monthly percent change. In our analysis, each case represents a time-point observation for a specific food item.
 
@@ -55,7 +58,7 @@ For the Average Price dataset, we imported multiple files and merged them into o
 
 For the egg price dataset, we cleaned the data by formatting the date variable, converting percentage change values into numeric format, and removing missing or invalid entries.
 
-We used R and tidyverse tools, including dplyr, tidyr, ggplot2, and readr, to complete these steps and prepare clean datasets for analysis.
+We used R and tidyverse tools, including dplyr, tidyr, ggplot2, and readr, to complete  steps and prepare clean datasets for analysis.
 
 # Exploratory Data Analysis
 
@@ -174,7 +177,7 @@ value_area_eggs <- ggplot(data_clean |> filter(!is.na(Value)),
   ) +
   theme_minimal()
 ```
-As we can see from the plots above, the prices of eggs have generally increased as time goes on. There are a few spikes that stick out to take note of. One spike tends to occur in 2020 among all of the Percent Change plots. We can attest these spikes to the COVID-19 pandemic and shutdown that the world faced in early 2020. Some other notable spikes and drops that we can see are in early 2023 and early 2025. We can diagnose the reason by analyzing the seasons these spikes occurred in, which happen to be winter. Winter is notorious for being flu season, which is exactly what caused these spikes. In late 2022/24 to early 2023/25 the country faced an outbreak of avian flu which would lead to the deaths of millions of egg laying hens nationwide.
+As we can see from the plots above, the prices of eggs have generally increased as time goes on. There are a few spikes that stick out to take note of. One spike tends to occur in 2020 among all of the Percent Change plots. We can attribute these spikes to the COVID-19 pandemic and the shutdown that the world faced in early 2020. Some other notable spikes and drops that we can see are in early 2023 and early 2025. We can diagnose the reason by analyzing the seasonal spikes that occurred, which happen to be in winter. Winter is notorious for being flu season, which is exactly what caused  spikes [@schulz2023eggs]. In late 2022/24 to early 2023/25 the country faced an outbreak of avian flu, which would lead to the deaths of millions of egg-laying hens nationwide.
 
 ```{r, echo = FALSE}
 summary_table <- data_clean |>
